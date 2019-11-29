@@ -9,23 +9,34 @@ namespace TesteCRUD.Controllers
 {
 	public class HomeController : Controller
 	{
+		GenericRepository<Person> pessoaRepository = new GenericRepository<Person>();
 		public ActionResult Index()
 		{			
 			return View();
 		}
 
-		public ActionResult About()
-		{
-			ViewBag.Message = "Your application description page.";
-
+		[HttpPost]
+		public ActionResult CreatePage()
+		{			
 			return View();
 		}
 
-		public ActionResult Contact()
+		public JsonResult CreatePeople(Person pessoa)
 		{
-			ViewBag.Message = "Your contact page.";
+			Person newPessoa = new Person();
+			newPessoa.nome = pessoa.nome;
+			newPessoa.telefone = pessoa.telefone;
 
-			return View();
+			try
+			{
+				pessoaRepository.Save(pessoa);
+				return Json(newPessoa.nome, JsonRequestBehavior.AllowGet);
+			}
+			catch (Exception ex)
+			{
+				return Json(null, JsonRequestBehavior.AllowGet);
+			}
 		}
+
 	}
 }

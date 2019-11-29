@@ -13,6 +13,7 @@ namespace TesteCRUD
 		{
 			Id(x => x.id).GeneratedBy.Increment();
 			Map(x => x.nome);
+			Map(x => x.telefone);
 			Table("person");
 		}
 	}
